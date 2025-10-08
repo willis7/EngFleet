@@ -1,0 +1,4572 @@
+{
+  "x-generator": "NSwag v14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Intigriti v2.1",
+    "version": "2.1"
+  },
+  "servers": [
+    {
+      "url": "https://api.intigriti.com/external/company"
+    }
+  ],
+  "paths": {
+    "/v2.1/programs/{programId}": {
+      "get": {
+        "tags": ["Programs"],
+        "summary": "Get program detail",
+        "operationId": "Programs_GetProgram",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a full representation of the given program.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProgramDetailViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/programs/{programId}/import-submission": {
+      "post": {
+        "tags": ["Programs"],
+        "summary": "[BETA] Import known issues and historical vulnerability reports through this API endpoint.",
+        "operationId": "Programs_ImportSubmission",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportSubmissionCreateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "201": {
+            "description": "The submission code for the imported submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionCodeViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/company-bonuses": {
+      "post": {
+        "tags": ["Submissions"],
+        "summary": "Create one or more company submission bonusses",
+        "operationId": "Submissions_AddCompanyBonus",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "cm",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCompanyBonusCreateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "202": {
+            "description": "One or more company bonusses are added to the provided submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionPayoutIdViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/pdf-exports": {
+      "post": {
+        "tags": ["Submissions"],
+        "summary": "Export submission as a PDF file",
+        "operationId": "Submissions_ExportSubmissionPdf",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "timeZone",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the exported submission as a PDF file.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "byte"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/csv-exports": {
+      "post": {
+        "tags": ["Submissions"],
+        "summary": "Export submission as a CSV file",
+        "operationId": "Submissions_ExportSubmissionCsv",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "timeZone",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the exported submission as a CSV file.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "byte"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/attachment": {
+      "post": {
+        "tags": ["Submissions"],
+        "summary": "[BETA] Add an additional attachment to a submission.",
+        "operationId": "Submissions_AddAttachment",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "attachmentCode",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file"],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "The file to upload",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Information of the added attachment to the provided submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/company-assets": {
+      "get": {
+        "tags": ["Company Assets"],
+        "summary": "Get company assets",
+        "operationId": "CompanyAssets_GetCompanyAssets",
+        "responses": {
+          "200": {
+            "description": "Returns assets of the company.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyAssetViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/company-assets/{assetId}/custom-fields": {
+      "get": {
+        "tags": ["Company Assets"],
+        "summary": "Get custom fields of a company asset",
+        "operationId": "CompanyAssets_GetCompanyAssetCustomFields",
+        "parameters": [
+          {
+            "name": "assetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the custom fields of a given company asset.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyAssetCustomFieldViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/company-assets/{assetId}/required-skills": {
+      "get": {
+        "tags": ["Company Assets"],
+        "summary": "Get the required skills of a company asset",
+        "operationId": "CompanyAssets_GetCompanyAssetRequiredSkills",
+        "parameters": [
+          {
+            "name": "assetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the required skills of a company asset",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SkillViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/groups": {
+      "get": {
+        "tags": ["Groups"],
+        "summary": "Get all groups",
+        "operationId": "Groups_GetAll",
+        "responses": {
+          "200": {
+            "description": "Returns all groups of the company.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupOverviewViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/groups/{groupId}/submissions": {
+      "get": {
+        "tags": ["Groups"],
+        "summary": "Get all group submissions",
+        "operationId": "Groups_GetGroupSubmissions",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "UpdatedSince",
+            "in": "query",
+            "description": "Return records that were updated as of the given date time in unix timestamp format.",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "maximum": 9223372036854780000.0,
+              "minimum": 0.0,
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all submissions of the given group.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionOverviewViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/payouts": {
+      "get": {
+        "tags": ["Payouts"],
+        "summary": "Get all company payouts",
+        "operationId": "Payouts_GetPayouts",
+        "responses": {
+          "200": {
+            "description": "Returns all payouts of the company.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PayoutViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/programs": {
+      "get": {
+        "tags": ["Programs"],
+        "summary": "Get all programs",
+        "operationId": "Programs_GetAllPrograms",
+        "responses": {
+          "200": {
+            "description": "Returns all your programs that are visible on the intigriti platform.\n\nThe scope of programs is determined by the Bearer Token provided in the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProgramOverviewViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/programs/{programId}/submissions": {
+      "get": {
+        "tags": ["Programs"],
+        "summary": "Get all program submissions",
+        "operationId": "Programs_GetProgramSubmissions",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "UpdatedSince",
+            "in": "query",
+            "description": "Return records that were updated as of the given date time in unix timestamp format.",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "maximum": 9223372036854780000.0,
+              "minimum": 0.0,
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all submissions of the given program.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionOverviewViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/programs/{programId}/researchers": {
+      "get": {
+        "tags": ["Programs"],
+        "summary": "Get all researchers of a program",
+        "operationId": "Programs_GetProgramResearchers",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all linked researchers of the given program.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProgramResearcherViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/programs/{programId}/payouts": {
+      "get": {
+        "tags": ["Programs"],
+        "summary": "Get all program payouts",
+        "operationId": "Programs_GetProgramPayouts",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all payouts of a given program.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PayoutViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/programs/updates": {
+      "get": {
+        "tags": ["ProgramUpdates"],
+        "summary": "Get all program updates (company-wide)",
+        "operationId": "ProgramUpdates_GetAllUpdates",
+        "responses": {
+          "200": {
+            "description": "Returns all program updates of your company.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProgramUpdateOverviewViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/programs/{programId}/updates": {
+      "get": {
+        "tags": ["ProgramUpdates"],
+        "summary": "Get all program updates of a program",
+        "operationId": "ProgramUpdates_GetByProgramId",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all program updates of the given program.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProgramUpdateOverviewViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["ProgramUpdates"],
+        "summary": "Create program update",
+        "operationId": "ProgramUpdates_Create",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "cm",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProgramUpdateCreateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "Creates a draft update or publishes an update on the given program.\n\nWhen publishing an update, a researcher notification can be triggered (optionally).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProgramUpdateIdViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/programs/{programId}/updates/{programUpdateId}": {
+      "put": {
+        "tags": ["ProgramUpdates"],
+        "summary": "Update program update",
+        "operationId": "ProgramUpdates_Update",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "programUpdateId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "um",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProgramUpdateUpdateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 3
+        },
+        "responses": {
+          "200": {
+            "description": "The existing (draft) update on the given program is updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProgramUpdateIdViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["ProgramUpdates"],
+        "summary": "Delete program update",
+        "operationId": "ProgramUpdates_Delete",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "programUpdateId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The existing update on the given program is deleted."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/programs/{programId}/updates/{programUpdateId}/publish": {
+      "post": {
+        "tags": ["ProgramUpdates"],
+        "summary": "Publish program update",
+        "operationId": "ProgramUpdates_Publish",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "programUpdateId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "um",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublishProgramUpdateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 3
+        },
+        "responses": {
+          "200": {
+            "description": "The existing update on the given program is published.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProgramUpdateIdViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submission-possible-types": {
+      "get": {
+        "tags": ["SubmissionPossibleTypes"],
+        "summary": "Get all possible submission types",
+        "operationId": "SubmissionPossibleTypes_GetSubmissionTypes",
+        "responses": {
+          "200": {
+            "description": "Returns all possible submission types.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionPossibleTypeViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions": {
+      "get": {
+        "tags": ["Submissions"],
+        "summary": "Get all submissions",
+        "operationId": "Submissions_GetOverview",
+        "parameters": [
+          {
+            "name": "UpdatedSince",
+            "in": "query",
+            "description": "Return records that were updated as of the given date time in unix timestamp format.",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "maximum": 9223372036854780000.0,
+              "minimum": 0.0,
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all submissions of the company.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionOverviewViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}": {
+      "get": {
+        "tags": ["Submissions"],
+        "summary": "Get submission detail",
+        "operationId": "Submissions_Get",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a full representation of the given submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionDetailsViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/events": {
+      "get": {
+        "tags": ["Submissions"],
+        "summary": "Get submission events",
+        "operationId": "Submissions_GetEvents",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "CreatedSince",
+            "in": "query",
+            "description": "Return records that were created as of the given date time in unix timestamp format.",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "maximum": 9223372036854780000.0,
+              "minimum": 0.0,
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all events of the given submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionEventViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/state": {
+      "put": {
+        "tags": ["Submissions"],
+        "summary": "Update submission state",
+        "operationId": "Submissions_EditState",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "cm",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditStateCreateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "The state of the provided submission is updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionPossibleStatusTriggersViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/comments/internal": {
+      "post": {
+        "tags": ["Submissions"],
+        "summary": "Post internal submission message",
+        "operationId": "Submissions_PlaceInternalMessage",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "cm",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlaceInternalMessageCreateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "201": {
+            "description": "The internal message is added to the provided submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionMessageIdViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/comments/external": {
+      "post": {
+        "tags": ["Submissions"],
+        "summary": "Post external submission message",
+        "operationId": "Submissions_PlaceExternalMessage",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "cm",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlaceExternalMessageCreateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "201": {
+            "description": "The external message is added to the provided submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionMessageIdViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/internal-reference": {
+      "put": {
+        "tags": ["Submissions"],
+        "summary": "Update submission internal reference and internal reference link",
+        "operationId": "Submissions_EditInternalReference",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubmissionInternalReferenceModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "204": {
+            "description": "The internal reference and/or internal reference link is updated on the provided submission."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/severity": {
+      "put": {
+        "tags": ["Submissions"],
+        "summary": "Update submission severity",
+        "operationId": "Submissions_EditSeverity",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubmissionSeverityModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "204": {
+            "description": "The severity is updated on the provided submission."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/assign/me": {
+      "put": {
+        "tags": ["Submissions"],
+        "summary": "Update submission assignee to self",
+        "operationId": "Submissions_EditAssignee",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The provided submission is assigned to yourself."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/personal-data": {
+      "put": {
+        "tags": ["Submissions"],
+        "summary": "Update submission personal data flag",
+        "operationId": "Submissions_EditPersonalData",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubmissionPersonalDataFlagModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "204": {
+            "description": "The personal data flag is updated on the provided submission."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/awaiting-feedback": {
+      "put": {
+        "tags": ["Submissions"],
+        "summary": "Update submission awaiting feedback flag",
+        "operationId": "Submissions_EditAwaitingFeedBack",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubmissionAwaitingFeedbackFlagModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "204": {
+            "description": "The awaiting feedback flag is updated on the provided submission."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/company-bonuses/{payoutId}": {
+      "delete": {
+        "tags": ["Submissions"],
+        "summary": "Delete company submission bonus",
+        "operationId": "Submissions_DeleteCompanyBonus",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "payoutId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The company bonus is deleted from the provided submission."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/payouts": {
+      "get": {
+        "tags": ["Submissions"],
+        "summary": "Get submission payouts",
+        "operationId": "Submissions_GetPayouts",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all payouts of the given submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PayoutViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/integrations": {
+      "get": {
+        "tags": ["Submissions"],
+        "summary": "Get submission integrations",
+        "operationId": "Submissions_GetIntegrations",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all integrations of the given submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionIntegrationViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/possible-groups": {
+      "get": {
+        "tags": ["Submissions"],
+        "summary": "Get all possible groups for a submission",
+        "operationId": "Submissions_GetPossibleGroups",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all possible groups for the given submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionPossibleGroupViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/group": {
+      "put": {
+        "tags": ["Submissions"],
+        "summary": "Update submission group",
+        "operationId": "Submissions_EditGroup",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubmissionGroupUpdateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "204": {
+            "description": "The submission's group is updated."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/tags/{tag}": {
+      "delete": {
+        "tags": ["Submissions"],
+        "summary": "Remove submission tag",
+        "operationId": "Submissions_RemoveSubmissionTag",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "tag",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The tag is removed from the provided submission."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/tags": {
+      "post": {
+        "tags": ["Submissions"],
+        "summary": "Create submission tag",
+        "operationId": "Submissions_AddSubmissionTag",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddSubmissionTagCreateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "204": {
+            "description": "The tag is added to the provided submission."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/domain": {
+      "put": {
+        "tags": ["Submissions"],
+        "summary": "Update submission domain",
+        "operationId": "Submissions_EditAsset",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubmissionDomainUpdateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "204": {
+            "description": "The domain is updated on the provided submission."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/submissions/{submissionCode}/custom-bounty": {
+      "post": {
+        "tags": ["Submissions"],
+        "summary": "Set a custom bounty",
+        "operationId": "Submissions_SetCustomBounty",
+        "parameters": [
+          {
+            "name": "submissionCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetCustomBountyCreateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "204": {
+            "description": "A custom bounty has been set on the provided submission."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/iplookup": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Check user IP",
+        "operationId": "User_Get",
+        "parameters": [
+          {
+            "name": "ipAddress",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns whether the IP address is in use by an Intigriti user or not.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IpLookupViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/programs/{programId}/researchers/{researcherUserName}/access": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Check researcher program access",
+        "operationId": "User_ResearcherAccess",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "researcherUserName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a list of program views and whether the researchers can access them or not.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearcherAccessViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/reward-system/reward-requests": {
+      "get": {
+        "tags": ["RewardSystem"],
+        "summary": "Get all reward requests",
+        "operationId": "RewardSystem_GetOverview",
+        "parameters": [
+          {
+            "name": "Limit",
+            "in": "query",
+            "description": "Maximum amount of records that are retrieved.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "maximum": 200.0,
+              "minimum": 0.0,
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Offset",
+            "in": "query",
+            "description": "Amount of records to be skipped when retrieving.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "maximum": 2147483647.0,
+              "minimum": 0.0,
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "CreatedSince",
+            "in": "query",
+            "description": "Return records that were created as of the given date time in unix timestamp format.",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "maximum": 9223372036854780000.0,
+              "minimum": 0.0,
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "UpdatedSince",
+            "in": "query",
+            "description": "Return records that were updated as of the given date time in unix timestamp format.",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "maximum": 9223372036854780000.0,
+              "minimum": 0.0,
+              "nullable": true
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all reward requests of the company.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationWrapperViewModelOfRewardRequestOverviewViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/reward-system/reward-requests/{rewardRequestId}/payout": {
+      "get": {
+        "tags": ["RewardSystem"],
+        "summary": "Get payout of a reward request",
+        "operationId": "RewardSystem_Get",
+        "parameters": [
+          {
+            "name": "rewardRequestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the payout of the given reward request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PayoutViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/reward-system/reward-requests/{rewardRequestId}": {
+      "delete": {
+        "tags": ["RewardSystem"],
+        "summary": "Delete reward request",
+        "operationId": "RewardSystem_Delete",
+        "parameters": [
+          {
+            "name": "rewardRequestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The reward request is deleted."
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/reward-system/payout-reward-requests": {
+      "post": {
+        "tags": ["RewardSystem"],
+        "summary": "Create reward request for a payout",
+        "operationId": "RewardSystem_Create",
+        "requestBody": {
+          "x-name": "cm",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PayoutRewardRequestCreateModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "The reward request is created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePayoutRewardRequestIdViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    },
+    "/v2.1/reward-system/budget": {
+      "get": {
+        "tags": ["RewardSystem"],
+        "summary": "Get the reward bucket budget",
+        "operationId": "RewardSystem_GetRewardBucket",
+        "responses": {
+          "200": {
+            "description": "Returns the reward bucket budget of the company.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardBucketViewModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authorizationCode": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProgramDetailViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "programId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "handle": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "companyHandle": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "options": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EnumerationViewModel"
+            }
+          },
+          "state": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProgramCompanyStateViewModel"
+              }
+            ]
+          },
+          "confidentialityLevel": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "maxConfidentialityLevel": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "logoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "domain": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DomainViewModel"
+            }
+          },
+          "inScope": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AttachmentWrapperViewModelOfString"
+              }
+            ]
+          },
+          "outOfScope": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AttachmentWrapperViewModelOfString"
+              }
+            ]
+          },
+          "faq": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AttachmentWrapperViewModelOfString"
+              }
+            ]
+          },
+          "severityAssessment": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AttachmentWrapperViewModelOfString"
+              }
+            ]
+          },
+          "rulesOfEngagement": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AttachmentWrapperViewModelOfRulesOfEngagementViewModel"
+              }
+            ]
+          },
+          "submissionQuestions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/SubmissionQuestionViewModel"
+            }
+          },
+          "bountyTable": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/BountyTableViewModel"
+            }
+          },
+          "attachmentCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bugBounty": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/BugBountyViewModel"
+              }
+            ]
+          },
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "programBudget": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProgramBudgetViewModel"
+              }
+            ]
+          },
+          "tacRequired": {
+            "type": "boolean"
+          },
+          "tacEmpty": {
+            "type": "boolean"
+          },
+          "identityCheckedRequired": {
+            "type": "boolean"
+          },
+          "twoFactorRequired": {
+            "type": "boolean"
+          },
+          "skipTriage": {
+            "type": "boolean"
+          },
+          "awardRep": {
+            "type": "boolean"
+          },
+          "allowResearcherCollaboration": {
+            "type": "boolean"
+          },
+          "defaultAssignee": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CompanyUserViewModel"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "lastUpdatedAt": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "webLinks": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/WebLinksViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "EnumerationViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ProgramCompanyStateViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "lastStatusTriggerId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "DomainViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "companyAssetId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "endpoint": {
+            "type": "string",
+            "nullable": true
+          },
+          "tier": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "requiredSkills": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/SkillViewModel"
+            }
+          }
+        }
+      },
+      "SkillViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "AttachmentWrapperViewModelOfString": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "content": {
+            "type": "string",
+            "nullable": true
+          },
+          "attachments": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AttachmentViewModel"
+            }
+          }
+        }
+      },
+      "AttachmentViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "AttachmentWrapperViewModelOfRulesOfEngagementViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "content": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/RulesOfEngagementViewModel"
+              }
+            ]
+          },
+          "attachments": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AttachmentViewModel"
+            }
+          }
+        }
+      },
+      "RulesOfEngagementViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "testingRequirements": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TestingRequirementsViewModel"
+              }
+            ]
+          },
+          "safeHarbour": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "TestingRequirementsViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "intigritiMe": {
+            "type": "boolean"
+          },
+          "automatedTooling": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "userAgent": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestHeader": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionQuestionViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "question": {
+            "type": "string",
+            "nullable": true
+          },
+          "customAnswerOptions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BountyTableViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "bountyRows": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/BountyRowViewModel"
+            }
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "BountyRowViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "bountyTier": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "bountyRanges": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/BountyRangeViewModel"
+            }
+          }
+        }
+      },
+      "BountyRangeViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "minBounty": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "maxBounty": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "minScore": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "maxScore": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "severity": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "MoneyViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "BugBountyViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "autoSuspendThreshold": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "leaderboardVisibility": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "ProgramBudgetViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "budgetLeft": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "budgetSpent": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "budgetInValidation": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "budgetTotal": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "CompanyUserViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserViewModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "email": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "UserViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "avatarUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "WebLinksViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "details": {
+            "type": "string",
+            "nullable": true
+          },
+          "submissions": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionCodeViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ImportSubmissionCreateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "createdAt": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "internalReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "internalReferenceUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "endpointVulnerableComponent": {
+            "type": "string",
+            "nullable": true
+          },
+          "pocDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "impact": {
+            "type": "string",
+            "nullable": true
+          },
+          "recommendedSolution": {
+            "type": "string",
+            "nullable": true
+          },
+          "ipAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "personalData": {
+            "type": "boolean"
+          },
+          "severityId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "severityVector": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "closeReasonId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "assetId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "awaitingFeedback": {
+            "type": "boolean"
+          },
+          "tags": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "messages": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ImportSubmissionMessageCreateModel"
+            }
+          },
+          "groupId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "questionAnswers": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ImportSubmissionQuestionCreateModel"
+            }
+          }
+        }
+      },
+      "ImportSubmissionMessageCreateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "content": {
+            "type": "string",
+            "nullable": true
+          },
+          "external": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          }
+        }
+      },
+      "ImportSubmissionQuestionCreateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "question": {
+            "type": "string",
+            "nullable": true
+          },
+          "answer": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionPayoutIdViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "payoutIds": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "AddCompanyBonusCreateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyCreateModel"
+              }
+            ]
+          },
+          "researcherId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          }
+        }
+      },
+      "MoneyCreateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CompanyAssetViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "CompanyAssetCustomFieldViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "GroupOverviewViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "companyId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionOverviewViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "originators": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionOriginatorsViewModel"
+              }
+            ]
+          },
+          "internalReference": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionInternalReferenceViewModel"
+              }
+            ]
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "severity": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionSeverityViewModel"
+              }
+            ]
+          },
+          "state": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionOverviewStateViewModel"
+              }
+            ]
+          },
+          "totalPayout": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "lastUpdatedAt": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "awaitingFeedback": {
+            "type": "boolean"
+          },
+          "destroyed": {
+            "type": "boolean"
+          },
+          "assignee": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CompanyUserViewModel"
+              }
+            ]
+          },
+          "tags": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "groupId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "submitter": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ResearcherViewModel"
+              }
+            ]
+          },
+          "collaboratorCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "webLinks": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/WebLinksViewModel2"
+              }
+            ]
+          }
+        }
+      },
+      "SubmissionOriginatorsViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "programId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "pentestCode": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionInternalReferenceViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionSeverityViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "vector": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "score": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionOverviewStateViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "closeReason": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "ResearcherViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserViewModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "ranking": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ResearcherRankingViewModel"
+                  }
+                ]
+              },
+              "identityChecked": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      },
+      "ResearcherRankingViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rank": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reputation": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "streak": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "WebLinksViewModel2": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "details": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PayoutViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "originators": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PayoutOriginatorsViewModel"
+              }
+            ]
+          },
+          "amount": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "researcher": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ResearcherViewModel"
+              }
+            ]
+          },
+          "status": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "paidAt": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "lastUpdatedAt": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          }
+        }
+      },
+      "PayoutOriginatorsViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "programId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "pentestCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "submissionCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "rewardRequestId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "retestId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          }
+        }
+      },
+      "ProgramOverviewViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "handle": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "companyHandle": {
+            "type": "string",
+            "nullable": true
+          },
+          "logoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "confidentialityLevel": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "webLinks": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/WebLinksViewModel3"
+              }
+            ]
+          },
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "WebLinksViewModel3": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "details": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ProgramResearcherViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "user": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserViewModel"
+              }
+            ]
+          },
+          "metrics": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProgramResearcherRankingViewModel"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "ProgramResearcherRankingViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResearcherRankingViewModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "validity": {
+                "type": "number",
+                "format": "double"
+              }
+            }
+          }
+        ]
+      },
+      "ProgramUpdateOverviewViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "originators": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProgramUpdateOriginatorsViewModel"
+              }
+            ]
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "publishedAt": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          }
+        }
+      },
+      "ProgramUpdateOriginatorsViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "programId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          }
+        }
+      },
+      "ProgramUpdateIdViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "programId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "id": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "ProgramUpdateCreateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "publish": {
+            "type": "boolean"
+          },
+          "notifyResearchers": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ProgramUpdateUpdateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PublishProgramUpdateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "notifyResearchers": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SubmissionPossibleTypeViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "cwe": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionPossibleTypeCategoryViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "SubmissionPossibleTypeCategoryViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionDetailsViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "originators": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionOriginatorsViewModel"
+              }
+            ]
+          },
+          "internalReference": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionInternalReferenceViewModel"
+              }
+            ]
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "report": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionReportViewModel"
+              }
+            ]
+          },
+          "state": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionDetailsStateViewModel"
+              }
+            ]
+          },
+          "severity": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionSeverityViewModel"
+              }
+            ]
+          },
+          "awaitingFeedback": {
+            "type": "boolean"
+          },
+          "reward": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionRewardViewModel"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "destroyed": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DestroyedViewModel"
+              }
+            ]
+          },
+          "assignee": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CompanyUserViewModel"
+              }
+            ]
+          },
+          "tags": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "groupId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "submitter": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ResearcherViewModel"
+              }
+            ]
+          },
+          "lastUpdated": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionLastUpdatedViewModel"
+              }
+            ]
+          },
+          "attachmentCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "webLinks": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/WebLinksViewModel4"
+              }
+            ]
+          },
+          "integrationCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customFields": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/SubmissionCustomFieldViewModel"
+            }
+          }
+        }
+      },
+      "SubmissionReportViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "originalTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionTypeViewModel"
+              }
+            ]
+          },
+          "questions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/SubmissionQuestionViewModel2"
+            }
+          },
+          "domain": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionDetailsDomainViewModel"
+              }
+            ]
+          },
+          "endpointVulnerableComponent": {
+            "type": "string",
+            "nullable": true
+          },
+          "pocDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "impact": {
+            "type": "string",
+            "nullable": true
+          },
+          "personalData": {
+            "type": "boolean"
+          },
+          "recommendedSolution": {
+            "type": "string",
+            "nullable": true
+          },
+          "attachments": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AttachmentViewModel"
+            }
+          },
+          "ip": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionTypeViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "cwe": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionQuestionViewModel2": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "question": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionQuestionTypeViewModel"
+              }
+            ]
+          },
+          "answer": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionQuestionTypeViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionDetailsDomainViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "companyAssetId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "motivation": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "tier": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionDetailsStateViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SubmissionStateViewModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "validatedAt": {
+                "type": "integer",
+                "format": "int64",
+                "nullable": true
+              },
+              "acceptedAt": {
+                "type": "integer",
+                "format": "int64",
+                "nullable": true
+              },
+              "closedAt": {
+                "type": "integer",
+                "format": "int64",
+                "nullable": true
+              },
+              "archivedAt": {
+                "type": "integer",
+                "format": "int64",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "SubmissionStateViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "closeReason": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "duplicateInfo": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionDuplicateInfoViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "SubmissionDuplicateInfoViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "parentSubmissionCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "childSubmissionCodes": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SubmissionRewardViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "totalPayout": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "totalBountyPayout": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "totalBonusPayout": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "possibleBounty": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "DestroyedViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "destroyedBy": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CompanyUserViewModel"
+              }
+            ]
+          },
+          "destroyedAt": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "SubmissionLastUpdatedViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "lastUpdater": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserViewModel"
+              }
+            ]
+          },
+          "lastUpdatedAt": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "WebLinksViewModel4": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "details": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionCustomFieldViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SubmissionCustomFieldTypeViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "SubmissionCustomFieldTypeViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionEventViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "visibility": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "user": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "SubmissionPossibleStatusTriggersViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "statusTriggers": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "EditStateCreateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "statusTrigger": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "closeReason": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "duplicateSubmission": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionMessageIdViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "messageId": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "PlaceInternalMessageCreateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PlaceExternalMessageCreateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateSubmissionInternalReferenceModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateSubmissionSeverityModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "vector": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateSubmissionPersonalDataFlagModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["personalData"],
+        "properties": {
+          "personalData": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UpdateSubmissionAwaitingFeedbackFlagModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["awaitingFeedback"],
+        "properties": {
+          "awaitingFeedback": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SubmissionIntegrationViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "integrationId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deletedAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SubmissionPossibleGroupViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateSubmissionGroupUpdateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["groupId"],
+        "properties": {
+          "groupId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          }
+        }
+      },
+      "AddSubmissionTagCreateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tag": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateSubmissionDomainUpdateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "domainId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "motivation": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SetCustomBountyCreateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "customBounty": {
+            "$ref": "#/components/schemas/MoneyCreateModel2"
+          }
+        }
+      },
+      "MoneyCreateModel2": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "IpLookupViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "exists": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ResearcherAccessViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "canCreateSubmission": {
+            "type": "boolean"
+          },
+          "canViewProgramDetail": {
+            "type": "boolean"
+          },
+          "canViewProgramPreview": {
+            "type": "boolean"
+          },
+          "canViewProgramList": {
+            "type": "boolean"
+          },
+          "canViewProgramTac": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PaginationWrapperViewModelOfRewardRequestOverviewViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "records": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/RewardRequestOverviewViewModel"
+            }
+          }
+        }
+      },
+      "RewardRequestOverviewViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "internalReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "recipientEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          },
+          "isDeletable": {
+            "type": "boolean"
+          },
+          "reward": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/RewardViewModel"
+              }
+            ]
+          },
+          "createdBy": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/RewardSystemUserViewModel"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "claimedBy": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ResearcherViewModel"
+              }
+            ]
+          },
+          "claimedAt": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "lastUpdatedAt": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "RewardViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "payout": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PayoutRewardViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "PayoutRewardViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "payoutId": {
+            "type": "string",
+            "nullable": true
+          },
+          "amount": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "severity": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EnumerationViewModel"
+              }
+            ]
+          }
+        }
+      },
+      "RewardSystemUserViewModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserViewModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "email": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "CreatePayoutRewardRequestIdViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rewardRequestId": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "PayoutRewardRequestCreateModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "internalReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "recipientEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "severity": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "amount": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyCreateModel2"
+              }
+            ]
+          }
+        }
+      },
+      "RewardBucketViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "budgetLeft": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "budgetInValidation": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "budgetSpent": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          },
+          "budgetTotal": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MoneyViewModel"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "authorizationCode": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.intigriti.com/connect/authorize",
+            "tokenUrl": "https://login.intigriti.com/connect/token",
+            "scopes": {
+              "company_external_api": "Gives permission to call the external api",
+              "core_platform:read": "Gives read permissions for the core platform endpoints",
+              "core_platform:write": "Gives write permissions for the core platform endpoints",
+              "reward_system:read": "Gives read permissions for the reward system endpoints",
+              "reward_system:write": "Gives write permissions for the reward system endpoints",
+              "offline_access": "Gives permission to retrieve a refresh token"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "authorizationCode": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Company Assets"
+    }
+  ]
+}
