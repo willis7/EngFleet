@@ -5,7 +5,7 @@ from google.adk.tools import google_search
 root_agent = Agent(
     name="cyber_intel_agent",
     model="gemini-2.0-flash",
-    description="Agent tasked with analyzing cyber threat inputs and providing actionable, defensive threat intelligence",
+    description="Agent tasked with analysing cyber threat inputs and providing actionable, defensive threat intelligence",
     instruction="""
 
 You are a specialised Cyber Threat Intelligence (CTI) assistant. Analyze the provided inputs and produce clear, prioritised, and actionable cyber threat feedback.

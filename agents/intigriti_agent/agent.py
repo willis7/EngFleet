@@ -1,6 +1,7 @@
 from google.adk.agents import Agent
 
-from .intigriti_connector_tool import intigriti_toolset 
+from .intigriti_connector_tool import intigriti_toolset
+
 
 root_agent = Agent(
     name="intigriti_interacting_agent",
