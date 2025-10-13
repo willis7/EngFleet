@@ -1,8 +1,6 @@
 import asyncio
 
 from dotenv import load_dotenv
-from google.adk.agents.llm_agent import LlmAgent
-from google.adk.artifacts.in_memory_artifact_service import InMemoryArtifactService
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
@@ -20,7 +18,7 @@ async def async_main():
         state={}, app_name="cyber_intel_app", user_id="user_dc"
     )
 
-    query = "Vulnerability exposure assessment (example) TLP:GREEN. Assess risk for Atlassian Confluence Data Center (8.5.4 and 8.7.x). Two internet-facing nodes show /setup endpoints exposed. Timeframe: last 14 days. Industry: Technology. Business criticality: High. Evaluate relevance of CVE-2023-22515 (and related CVEs), exploitation in the wild, and our likely exposure paths. Provide prioritized defensive actions (Immediate/48h/2+ weeks), hardening guidance, log sources to review, and example detections (Sigma/Splunk/KQL). Include MITRE ATT&CK mapping, risk and confidence ratings, and references (NVD, CISA KEV, vendor advisories)."
+    query = "Vulnerability exposure assessment (MongoDB/Atlas) TLP:GREEN. Assess risk for MongoDB AtlasHQ SaaS–hosted clusters running MongoDB Server 6.x/7.x. Environment: Multiple internet-facing clusters with public IPs; primary auth is username/password (SCRAM), with some clusters now using Mongo STS/federated access. Data sensitivity: PII. Business criticality: High. Timeframe: last 14 days. Evaluate relevance of current MongoDB Server and MongoDB Atlas platform CVEs (including those in MongoDB Security Bulletins), evidence of exploitation in the wild, and likely exposure paths specific to Atlas public endpoints, Atlas API keys, IP access list configurations, authentication methods (username/password vs STS), TLS posture, and backup/restore pipelines. Provide prioritized defensive actions (Immediate/48h/2+ weeks), hardening guidance tailored to Atlas (network access lists, private endpoints/peering, TLS, SCRAM-SHA-256, SSO/MFA, API key scoping/rotation, auditing, Client-Side Field Level Encryption/Queryable Encryption, snapshot protections), log sources to review, and example detections (Sigma/Splunk/KQL). Include MITRE ATT&CK mapping, risk and confidence ratings, and references (NVD, CISA KEV, MongoDB Security Bulletins, vendor advisories)."
     print(f"User Query: '{query}'")
     content = types.Content(role="user", parts=[types.Part(text=query)])
 

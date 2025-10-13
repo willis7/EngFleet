@@ -1,6 +1,30 @@
-# Agent Architecture
+# Intigriti Agent
 
-## Component
+## Development
+
+Run the cyber intel agent programmatically:
+
+```bash
+cd agents
+ uv run -m intigriti_agent.cyber_intel_client
+```
+
+Run the cyber intel agent as an a2a server:
+
+```bash
+cd agents
+uv run -m intigriti_agent.a2a_server
+```
+
+Request the agent card from the locally running server:
+
+```bash
+curl http://localhost:10004/.well-known/agent.json | jq
+```
+
+## Architecture
+
+### Component
 
 ```mermaid
 graph TB
@@ -11,7 +35,7 @@ graph TB
     A -->|powered by| F[Gemini 2.0 Flash Model]
 ```
 
-## Sequence Diagram for OAuth Flow
+### Sequence Diagram for OAuth Flow
 
 ```mermaid
 sequenceDiagram

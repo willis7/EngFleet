@@ -1,14 +1,12 @@
 import os
 
 from dotenv import load_dotenv
-from fastapi.openapi.models import OAuth2
-from fastapi.openapi.models import OAuthFlowAuthorizationCode
-from fastapi.openapi.models import OAuthFlows
+from fastapi.openapi.models import OAuth2, OAuthFlowAuthorizationCode, OAuthFlows
+from google.adk.auth import AuthCredential, AuthCredentialTypes, OAuth2Auth
+from google.adk.tools.openapi_tool.openapi_spec_parser.openapi_toolset import (
+    OpenAPIToolset,
+)
 
-from google.adk.tools.openapi_tool.openapi_spec_parser.openapi_toolset import OpenAPIToolset
-from google.adk.auth import AuthCredential
-from google.adk.auth import AuthCredentialTypes
-from google.adk.auth import OAuth2Auth
 
 load_dotenv()
 
@@ -32,12 +30,12 @@ oauth2_scheme = OAuth2(
 )
 
 oauth2_credential = AuthCredential(
-  auth_type=AuthCredentialTypes.OAUTH2,
-  oauth2=OAuth2Auth(
-    client_id=INTIGRITI_CLIENT_ID,
-    client_secret=INTIGRITI_CLIENT_SECRET,
-    redirect_uri=AGENT_REDIRECT_URI
-  )
+    auth_type=AuthCredentialTypes.OAUTH2,
+    oauth2=OAuth2Auth(
+        client_id=INTIGRITI_CLIENT_ID,
+        client_secret=INTIGRITI_CLIENT_SECRET,
+        redirect_uri=AGENT_REDIRECT_URI,
+    ),
 )
 
 intigriti_spec_path = os.path.join(

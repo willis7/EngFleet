@@ -7,7 +7,7 @@
         "expected_tool_use": [],
         "expected_intermediate_agent_responses": [
           {
-            "author": "intel_enrichment_agent",
+            "author": "cyber_intel_agent",
             "text": "Normalized and de-duplicated 5 observables (1 domain, 1 URL, 1 IP, 1 email, 1 hash). Proceeding with reputation and passive DNS enrichment."
           }
         ],
