@@ -1,0 +1,6 @@
+[submodule "ref/adk-samples"]
+	path = ref/adk-samples
+	url = https://github.com/google/adk-samples
+[submodule "ref/a2a-samples"]
+	path = ref/a2a-samples
+	url = git@github.com:a2aproject/a2a-samples.git

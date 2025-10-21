@@ -15,6 +15,17 @@ dev = [
     "ruff>=0.13.3",
 ]
 
+[tool.ruff]
+exclude = [
+    "ruff/",
+    ".git",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+    "ref"
+]
+
 [tool.ruff.lint]
 select = [
     # Pyflakes
