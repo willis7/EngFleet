@@ -7,3 +7,6 @@
 [submodule "ref/instavibe-adk"]
 	path = ref/instavibe-adk
 	url = git@github.com:weimeilin79/instavibe-adk.git
+[submodule "ref/poml"]
+	path = ref/poml
+	url = git@github.com:microsoft/poml.git
